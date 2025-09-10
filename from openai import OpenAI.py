@@ -19,10 +19,11 @@ for entry in feed.entries[:10]:
 
 
 #pick 3 and summarize
-client = OpenAI(api_key="my_key")
+client = OpenAI(api_key="my_key") #change my_key to the long line of characters I sent you
 
 article_text = "\n\n".join([f"{i+1}.{a['title']} - {a['summary']}" for i, a in enumerate(articles)])
 
+#you can custome the prompt below however you like
 prompt = f"""
 Here are some recent articles about Intel Corporation:
 
@@ -45,8 +46,10 @@ response = client.chat.completions.create(
 newsletter_content = response.choices[0].message.content
 
 #send email
-sender = "1goSgoodti@gmail.com"
+#change sender and receiver to your email
+sender = "1goSgoodti@gmail.com" 
 receiver = "1goSgoodti@gmail.com"
+#dad, learn how to create an app password here for yahoo: https://help.yahoo.com/kb/SLN15241.html
 password = "tgbw vhle uzaz uonc"
 
 msg = MIMEText(newsletter_content, "plain")
@@ -54,6 +57,7 @@ msg["Subject"] = "Daily Intel Corporation News"
 msg["From"] = sender
 msg["To"] = receiver
 
+#dad, for yahoo, try "smtp.mail.yahoo.com"
 with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
     server.login(sender, password)
     server.sendmail(sender, receiver, msg.as_string())
